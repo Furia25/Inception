@@ -1,0 +1,6 @@
+services:
+  mariadb:
+    image: mariadb-inception:latest
+    container_name: mariadb
+  nginx:
+    image: nginx-inception:latest
