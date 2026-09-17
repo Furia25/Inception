@@ -13,7 +13,7 @@ if [ ! -f "$CERT_FILE" ] || [ ! -f "$KEY_FILE" ]; then
         -newkey rsa:2048 \
         -keyout "$KEY_FILE" \
         -out "$CERT_FILE" \
-        -subj "/C=FR/ST=IDF/L=Paris/O=42/CN=${DOMAIN_NAME:-login.42.fr}"
+        -subj "/C=FR/ST=IDF/L=Paris/O=42/CN=${DOMAIN_NAME:-vdurand.42lyon.fr}"
 fi
 
 exec nginx -g "daemon off;"
