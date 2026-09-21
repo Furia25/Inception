@@ -20,7 +20,7 @@ if [ ! -d /var/lib/mysql/mysql ]; then
     find /var/lib/mysql -mindepth 1 -delete
     mariadb-install-db --user=mysql --datadir=/var/lib/mysql --auth-root-authentication-method=normal > /dev/null
 
-    mysqld_safe --user=mysql --datadir=/var/lib/mysql --skip-networking &
+    mysqld_safe --datadir=/var/lib/mysql --skip-networking &
     until mysqladmin ping --silent 2>/dev/null; do sleep 1; done
     mysql -u root <<EOSQL
 ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PASSWORD}';
