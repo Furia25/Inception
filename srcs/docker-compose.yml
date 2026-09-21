@@ -29,6 +29,7 @@ services:
     networks:
       - inception
     environment:
+      DOMAIN_NAME: ${DOMAIN_NAME}
       DB_HOST: mariadb
       DB_PORT: 3306
       DB_NAME: ${DB_NAME}
