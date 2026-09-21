@@ -16,12 +16,12 @@ file_env DB_PASSWORD
 mkdir -p /run/mysqld /var/lib/mysql
 chown -R mysql:mysql /run/mysqld /var/lib/mysql
 
-if [ ! -d /var/lib/mysql/mysql ]; then
+if [ ! -f /var/lib/mysql/.initialized ]; then
     find /var/lib/mysql -mindepth 1 -delete
     mariadb-install-db --user=mysql --datadir=/var/lib/mysql --auth-root-authentication-method=normal > /dev/null
 
-    mysqld_safe --datadir=/var/lib/mysql --skip-networking &
-    until mysqladmin ping --silent 2>/dev/null; do sleep 1; done
+    mysqld_safe --user=mysql --datadir=/var/lib/mysql --skip-networking &
+    timeout 60 sh -c 'until mysqladmin ping --silent 2>/dev/null; do sleep 1; done'
     mysql -u root <<EOSQL
 ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PASSWORD}';
 CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;
@@ -32,6 +32,7 @@ EOSQL
 
     mysqladmin -u root -p"${DB_ROOT_PASSWORD}" shutdown
     wait
+    touch /var/lib/mysql/.initialized
 fi
 
 exec mysqld --user=mysql --datadir=/var/lib/mysql
