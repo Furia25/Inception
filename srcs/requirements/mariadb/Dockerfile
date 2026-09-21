@@ -1,4 +1,4 @@
-FROM debian:latest
+FROM debian:bookworm
 
 RUN apt-get update -yqq && \
     apt-get install -yqq mariadb-server && \

@@ -41,7 +41,17 @@ services:
   
 volumes:
   wordpress-volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/${USER:-vdurand}/data/wordpress
   database:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/${USER:-vdurand}/data/mariadb
 
 networks:
   inception:
