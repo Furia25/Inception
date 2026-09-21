@@ -21,7 +21,8 @@ done
 
 cd /var/www/html
 
-if [ ! -f wp-config.php ]; then
+if ! wp core is-installed --allow-root 2>/dev/null; then
+    rm -f wp-config.php    # régénéré ci-dessous avec les valeurs actuelles
     wp config create \
         --dbname="${DB_NAME}" \
         --dbuser="${DB_USER}" \
@@ -38,15 +39,14 @@ if [ ! -f wp-config.php ]; then
         --skip-email \
         --allow-root
 
-    wp user create \
-        "${WP_USER}" "${WP_USER_EMAIL}" \
+    wp user create "${WP_USER}" "${WP_USER_EMAIL}" \
         --role=author \
         --user_pass="${WP_USER_PASSWORD}" \
         --allow-root
 
     chown -R www-data:www-data /var/www/html
 else
-    echo "WordPress already initialized, starting normally..."
+    echo "WordPress already installed, starting normally..."
 fi
 
 exec php-fpm -F
