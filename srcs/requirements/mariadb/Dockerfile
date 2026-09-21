@@ -4,7 +4,10 @@ RUN apt-get update -yqq && \
     apt-get install -yqq mariadb-server && \
     rm -rf /var/lib/apt/lists/*
 
-COPY ./content/setup.sh /
-RUN chmod +x setup.sh
+COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+COPY ./tools/setup_db.sh /usr/local/bin/setup_db.sh
+RUN chmod +x setup_db.sh
 
-ENTRYPOINT ["sh", "setup.sh"]
+EXPOSE 3306
+
+ENTRYPOINT ["/usr/local/bin/setup_db.sh"]
