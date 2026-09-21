@@ -57,7 +57,8 @@ services:
       - wordpress-volume:/var/www/html
     networks:
       - inception
-
+    environment:
+      DOMAIN_NAME: ${DOMAIN_NAME}
 volumes:
   wordpress-volume:
     driver: local
