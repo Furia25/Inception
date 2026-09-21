@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-until mysqladmin ping -h"${DB_HOST}" --silent; do
+until mysqladmin ping -h"${DB_HOST}" --skip-ssl --silent; do
     echo "Waiting MariaDB..."
     sleep 2
 done
