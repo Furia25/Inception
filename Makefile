@@ -75,7 +75,6 @@ fclean: clean
 	docker network prune -f
 
 
-
 re: fclean all
 
 .PHONY: all up down stop start restart logs ps data secrets clean fclean re

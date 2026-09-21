@@ -16,6 +16,8 @@ COPY conf/wp-config.php /tmp/wp-config.php
 COPY tools/setup_wp.sh /usr/local/bin/setup_wp.sh
 RUN chmod +x /usr/local/bin/setup_wp.sh
 
+RUN ln -s /usr/sbin/php-fpm8.2 /usr/local/bin/php-fpm
+
 EXPOSE 9000
 
 ENTRYPOINT ["/usr/local/bin/setup_wp.sh"]
