@@ -2,7 +2,7 @@
 set -e
 
 until mysqladmin ping -h"$WORDPRESS_DB_HOST" --silent; do
-    echo "En attente de MariaDB..."
+    echo "Waiting MariaDB..."
     sleep 2
 done
 
