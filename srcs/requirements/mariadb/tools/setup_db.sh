@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+mkdir -p /run/mysqld /var/lib/mysql
+chown -R mysql:mysql /run/mysqld /var/lib/mysql
+
 if [ ! -d "/var/lib/mysql/mysql" ]; then
     mariadb-install-db --user=mysql --datadir=/var/lib/mysql --auth-root-authentication-method=normal > /dev/null
 
@@ -18,5 +21,4 @@ EOSQL
     mysqladmin -u root -p"${DB_ROOT_PASSWORD}" shutdown
 fi
 
-chown -R mysql:mysql /var/lib/mysql
-exec mysqld --datadir=/var/lib/mysql
+exec mysqld --user=mysql --datadir=/var/lib/mysql
