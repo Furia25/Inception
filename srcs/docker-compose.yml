@@ -3,7 +3,6 @@ name: inception
 services:
   mariadb:
     build: ./requirements/mariadb
-    image: mariadb-inception
     container_name: mariadb
     restart: always
     env_file: .env
@@ -14,7 +13,6 @@ services:
 
   wordpress:
     build: ./requirements/wordpress
-    image: wordpress-inception
     container_name: wordpress
     restart: always
     env_file: .env
@@ -27,7 +25,6 @@ services:
 
   nginx:
     build: ./requirements/nginx
-    image: nginx-inception
     container_name: nginx
     restart: always
     depends_on:

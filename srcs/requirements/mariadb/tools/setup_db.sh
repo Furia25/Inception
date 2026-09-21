@@ -18,4 +18,5 @@ EOSQL
     mysqladmin -u root -p"${MYSQL_ROOT_PASSWORD}" shutdown
 fi
 
+chown -R mysql:mysql /var/lib/mysql
 exec mysqld --datadir=/var/lib/mysql
