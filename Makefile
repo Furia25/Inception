@@ -9,6 +9,7 @@ ENV_FILE		= $(COMPOSE_DIR)/.env
 
 COMPOSE			= docker compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE)
 
+SECRET_DIR = ./secrets
 SECRET_FILES = db_password db_root_password wp_admin_password wp_user_password
 
 all: up
@@ -38,20 +39,29 @@ data:
 	mkdir -p $(DATA_PATH)/wordpress
 
 init-secrets:
-	@mkdir -p $(COMPOSE_DIR)/secrets
+	@mkdir -p $(SECRET_DIR)
 	@for f in $(SECRET_FILES); do \
-		if [ ! -f $(COMPOSE_DIR)/secrets/$$f.txt ]; then \
-			openssl rand -base64 24 > $(COMPOSE_DIR)/secrets/$$f.txt; \
-			echo "$$f.txt genere."; \
-		else \
-			echo "$$f.txt existe deja, ignore."; \
+		if [ ! -f $(SECRET_DIR)/$$f.txt ]; then \
+			openssl rand -base64 24 > $(SECRET_DIR)/$$f.txt; \
+			echo "$$f.txt generated."; \
 		fi \
 	done
 
+
 secrets:
-	@if [ ! -d $(COMPOSE_DIR)/secrets ]; then \
-		echo "Directory $(COMPOSE_DIR)/secrets is missing."; \
-		echo "Need: $(SECRET_FILES)"; \
+	@missing=0; \
+	if [ ! -d $(SECRET_DIR) ]; then \
+		echo "Directory $(SECRET_DIR) is"; \
+		mkdir -p $(SECRET_DIR); \
+	fi; \
+	for f in $(SECRET_FILES); do \
+		if [ ! -f $(SECRET_DIR)/$$f.txt ]; then \
+			echo "Missing: $(SECRET_DIR)/$$f.txt"; \
+			missing=1; \
+		fi; \
+	done; \
+	if [ $$missing -eq 1 ]; then \
+		echo "Create the missing files before running 'make up'."; \
 		exit 1; \
 	fi
 
@@ -63,6 +73,8 @@ fclean: clean
 	@sudo rm -rf $(DATA_PATH)/wordpress/*
 	docker volume prune -f
 	docker network prune -f
+
+
 
 re: fclean all
 
