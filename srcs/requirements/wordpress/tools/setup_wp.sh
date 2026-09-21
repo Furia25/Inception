@@ -1,5 +1,18 @@
 #!/bin/bash
+
+file_env() {
+    local var="$1"
+    local file_var="${var}_FILE"
+    if [ -n "${!file_var:-}" ]; then
+        export "$var"="$(cat "${!file_var}")"
+    fi
+}
+
 set -e
+
+file_env WP_ADMIN_PASSWORD
+file_env WP_USER_PASSWORD
+file_env DB_PASSWORD
 
 until mysqladmin ping -h"${DB_HOST}" --skip-ssl --silent; do
     echo "Waiting MariaDB..."

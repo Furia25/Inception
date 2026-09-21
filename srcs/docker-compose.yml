@@ -12,8 +12,8 @@ services:
     environment:
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USER}
-      DB_PASSWORD: /run/secrets/db_password
-      DB_ROOT_PASSWORD: /run/secrets/db_root_password
+      DB_PASSWORD_FILE: /run/secrets/db_password
+      DB_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
     secrets:
       - db_password
       - db_root_password
@@ -33,13 +33,13 @@ services:
       DB_PORT: 3306
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USER}
-      DB_PASSWORD: /run/secrets/db_password
+      DB_PASSWORD_FILE: /run/secrets/db_password
       WP_ADMIN_USER: ${WP_ADMIN_USER}
       WP_ADMIN_EMAIL: ${WP_ADMIN_EMAIL}
-      WP_ADMIN_PASSWORD: /run/secrets/wp_admin_password
+      WP_ADMIN_PASSWORD_FILE: /run/secrets/wp_admin_password
       WP_USER: ${WP_USER}
       WP_USER_EMAIL: ${WP_USER_EMAIL}
-      WP_USER_PASSWORD: /run/secrets/wp_user_password
+      WP_USER_PASSWORD_FILE: /run/secrets/wp_user_password
     secrets:
       - db_password
       - wp_admin_password
