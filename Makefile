@@ -38,6 +38,10 @@ data:
 	mkdir -p $(DATA_PATH)/mariadb
 	mkdir -p $(DATA_PATH)/wordpress
 
+clean-data:
+	@sudo rm -rf $(DATA_PATH)/mariadb/*
+	@sudo rm -rf $(DATA_PATH)/wordpress/*
+
 init-secrets:
 	@mkdir -p $(SECRET_DIR)
 	@for f in $(SECRET_FILES); do \
@@ -46,7 +50,6 @@ init-secrets:
 			echo "$$f.txt generated."; \
 		fi \
 	done
-
 
 secrets:
 	@missing=0; \
@@ -68,13 +71,11 @@ secrets:
 clean: down
 	docker system prune -af
 
-fclean: clean
-	@sudo rm -rf $(DATA_PATH)/mariadb/*
-	@sudo rm -rf $(DATA_PATH)/wordpress/*
+fclean: clean clean-data
 	docker volume prune -f
 	docker network prune -f
 
 
 re: fclean all
 
-.PHONY: all up down stop start restart logs ps data secrets clean fclean re
+.PHONY: all up down stop start restart logs ps data secrets clean fclean re clean-data init-secrets
