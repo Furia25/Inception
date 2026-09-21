@@ -16,6 +16,6 @@ if [ ! -f "$CERT_FILE" ] || [ ! -f "$KEY_FILE" ]; then
         -subj "/C=FR/ST=IDF/L=Paris/O=42/CN=${DOMAIN_NAME:-vdurand.42.fr}"
 fi
 
-sed -i "s/DOMAIN_NAME/${DOMAIN_NAME}/g" /etc/nginx/conf.d/default.conf
+sed -i "s/DOMAIN_NAME/${DOMAIN_NAME}/g" /etc/nginx/nginx.conf
 
 exec nginx -g "daemon off;"
