@@ -12,6 +12,7 @@ RUN mkdir -p /var/www/html && \
     tar -xzf /tmp/wordpress.tar.gz -C /var/www/html --strip-components=1 && \
     rm /tmp/wordpress.tar.gz
 
+COPY conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 COPY conf/wp-config.php /tmp/wp-config.php
 COPY tools/setup_wp.sh /usr/local/bin/setup_wp.sh
 RUN chmod +x /usr/local/bin/setup_wp.sh
