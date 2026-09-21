@@ -16,8 +16,8 @@ file_env DB_PASSWORD
 mkdir -p /run/mysqld /var/lib/mysql
 chown -R mysql:mysql /run/mysqld /var/lib/mysql
 
-if [ ! -f /var/lib/mysql/.initialized ]; then
-    rm -rf /var/lib/mysql/*
+if [ ! -d /var/lib/mysql/mysql ]; then
+    find /var/lib/mysql -mindepth 1 -delete
     mariadb-install-db --user=mysql --datadir=/var/lib/mysql --auth-root-authentication-method=normal > /dev/null
 
     mysqld_safe --user=mysql --datadir=/var/lib/mysql --skip-networking &
@@ -32,7 +32,6 @@ EOSQL
 
     mysqladmin -u root -p"${DB_ROOT_PASSWORD}" shutdown
     wait
-    touch /var/lib/mysql/.initialized
 fi
 
 exec mysqld --user=mysql --datadir=/var/lib/mysql
