@@ -20,7 +20,7 @@ if [ ! -f /var/lib/mysql/.initialized ]; then
     rm -rf /var/lib/mysql/*
     mariadb-install-db --user=mysql --datadir=/var/lib/mysql --auth-root-authentication-method=normal > /dev/null
 
-    mysqld_safe --datadir=/var/lib/mysql --skip-networking &
+    mysqld_safe --user=mysql --datadir=/var/lib/mysql --skip-networking &
     until mysqladmin ping --silent 2>/dev/null; do sleep 1; done
     mysql -u root <<EOSQL
 ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PASSWORD}';
@@ -31,6 +31,7 @@ FLUSH PRIVILEGES;
 EOSQL
 
     mysqladmin -u root -p"${DB_ROOT_PASSWORD}" shutdown
+    wait
     touch /var/lib/mysql/.initialized
 fi
 
