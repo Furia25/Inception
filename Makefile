@@ -40,10 +40,14 @@ ps:
 data:
 	mkdir -p $(DATA_PATH)/mariadb
 	mkdir -p $(DATA_PATH)/wordpress
+	@if [ "$(MODE)" = "bonus" ]; then \
+		mkdir -p $(DATA_PATH)/redis; \
+		mkdir -p $(DATA_PATH)/ftp; \
+		mkdir -p $(DATA_PATH)/adminer; \
+	fi
 
 clean-data:
-	@sudo rm -rf $(DATA_PATH)/mariadb/*
-	@sudo rm -rf $(DATA_PATH)/wordpress/*
+	@sudo rm -rf $(DATA_PATH)/*
 
 init-secrets:
 	@mkdir -p $(SECRET_DIR)
