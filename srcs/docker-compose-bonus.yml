@@ -1,0 +1,24 @@
+include:
+  - path: ./docker-compose.yml
+
+services:
+  static:
+    build: ./requirements/bonus/static
+    container_name: static
+    restart: always
+    ports:
+      - "666:666"
+    volumes:
+      - static-volume:/var/www/html
+    networks:
+      - inception
+    environment:
+      DOMAIN_NAME: ${DOMAIN_NAME}
+
+volumes:
+  static-volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/${USER:-vdurand}/data/static

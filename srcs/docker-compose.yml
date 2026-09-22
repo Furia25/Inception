@@ -60,6 +60,7 @@ services:
       - inception
     environment:
       DOMAIN_NAME: ${DOMAIN_NAME}
+
 volumes:
   wordpress-volume:
     driver: local
