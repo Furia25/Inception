@@ -6,7 +6,7 @@ DATA_PATH		= /home/$(USER)/data
 MODE ?= normal
 
 COMPOSE_DIR			= srcs
-COMPOSE_FILE		= $(COMPOSE_DIR)/docker-compose$(if $(filter bonus,$(MODE)),-bonus,).yml
+COMPOSE_FILE		= $(COMPOSE_DIR)/docker-compose.yml
 COMPOSE_BONUS_FILE	= $(COMPOSE_DIR)/docker-compose-bonus.yml
 ENV_FILE			= $(COMPOSE_DIR)/.env
 
