@@ -40,10 +40,11 @@ ps:
 data:
 	mkdir -p $(DATA_PATH)/mariadb
 	mkdir -p $(DATA_PATH)/wordpress
-	@if [ "$(MODE)" = "bonus" ]; then \
+	if [ "$(MODE)" = "bonus" ]; then \
 		mkdir -p $(DATA_PATH)/redis; \
 		mkdir -p $(DATA_PATH)/ftp; \
 		mkdir -p $(DATA_PATH)/adminer; \
+		mkdir -p $(DATA_PATH)/static; \
 	fi
 
 clean-data:
