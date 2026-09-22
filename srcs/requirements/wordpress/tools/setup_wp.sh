@@ -13,7 +13,6 @@ file_env WP_ADMIN_PASSWORD
 file_env WP_USER_PASSWORD
 file_env DB_PASSWORD
 
-# Attendre que MariaDB accepte réellement les identifiants
 until mariadb -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASSWORD}" --skip-ssl \
         -e "SELECT 1" "${DB_NAME}" >/dev/null 2>&1; do
     echo "Waiting MariaDB..."
