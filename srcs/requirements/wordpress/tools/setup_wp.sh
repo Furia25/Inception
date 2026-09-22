@@ -39,6 +39,7 @@ if ! wp core is-installed --allow-root 2>/dev/null; then
         --admin_email="${WP_ADMIN_EMAIL}" \
         --skip-email \
         --allow-root
+
 fi
 
 if ! wp user get "${WP_USER}" --allow-root >/dev/null 2>&1; then
@@ -46,6 +47,15 @@ if ! wp user get "${WP_USER}" --allow-root >/dev/null 2>&1; then
         --role=author \
         --user_pass="${WP_USER_PASSWORD}" \
         --allow-root
+fi
+
+if [ "${ENABLE_REDIS:-false}" = "true" ]; then
+    wp plugin install redis-cache --activate --allow-root --path=/var/www/wordpress
+    wp config set WP_REDIS_HOST redis --allow-root --path=/var/www/wordpress
+    wp config set WP_REDIS_PORT 6379 --allow-root --path=/var/www/wordpress
+    wp redis enable --allow-root --path=/var/www/wordpress
+else
+    wp redis disable --allow-root --path=/var/www/wordpress 2>/dev/null || true
 fi
 
 chown -R www-data:www-data /var/www/html

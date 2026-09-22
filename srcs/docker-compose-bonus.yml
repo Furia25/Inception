@@ -2,6 +2,17 @@ include:
   - path: ./docker-compose.yml
 
 services:
+  redis:
+    build: ./requirements/bonus/redis
+    container_name: redis
+    restart: always
+    networks:
+      - inception
+  wordpress:
+    environment:
+      ENABLE_REDIS: "true"
+    depends_on:
+      - redis
   static:
     build: ./requirements/bonus/static
     container_name: static
