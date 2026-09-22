@@ -49,12 +49,12 @@ if ! wp user get "${WP_USER}" --allow-root >/dev/null 2>&1; then
 fi
 
 if [ "${ENABLE_REDIS:-false}" = "true" ]; then
-    wp plugin install redis-cache --activate --allow-root --path=/var/www/wordpress
-    wp config set WP_REDIS_HOST redis --allow-root --path=/var/www/wordpress
-    wp config set WP_REDIS_PORT 6379 --allow-root --path=/var/www/wordpress
-    wp redis enable --allow-root --path=/var/www/wordpress
+    wp plugin install redis-cache --activate --allow-root
+    wp config set WP_REDIS_HOST redis --allow-root
+    wp config set WP_REDIS_PORT 6379 --allow-root
+    wp redis enable --allow-root
 else
-    wp redis disable --allow-root --path=/var/www/wordpress 2>/dev/null || true
+    wp redis disable --allow-root 2>/dev/null || true
 fi
 
 chown -R www-data:www-data /var/www/html
