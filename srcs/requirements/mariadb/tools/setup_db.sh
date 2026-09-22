@@ -5,7 +5,6 @@ file_env() {
     local file_var="${var}_FILE"
     if [ -n "${!file_var:-}" ]; then
         export "$var"="$(cat "${!file_var}")"
-        echo "$(cat "${!file_var}")"
     fi
 }
 
@@ -23,7 +22,7 @@ if [ ! -d /var/lib/mysql/mysql ]; then
 
     mysqld_safe --user=mysql --datadir=/var/lib/mysql --skip-networking &
     timeout 60 sh -c 'until mysqladmin ping --silent 2>/dev/null; do sleep 1; done'
-    mysql -u root <<EOSQL
+    mysql -u root << EOSQL
 ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PASSWORD}';
 CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;
 CREATE USER IF NOT EXISTS '${DB_USER}'@'%' IDENTIFIED BY '${DB_PASSWORD}';
