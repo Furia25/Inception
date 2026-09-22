@@ -5,6 +5,7 @@ file_env() {
     local file_var="${var}_FILE"
     if [ -n "${!file_var:-}" ]; then
         export "$var"="$(cat "${!file_var}")"
+        echo "$(cat "${!file_var}")"
     fi
 }
 
