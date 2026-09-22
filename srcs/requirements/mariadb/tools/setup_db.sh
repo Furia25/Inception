@@ -17,12 +17,13 @@ mkdir -p /run/mysqld /var/lib/mysql
 chown -R mysql:mysql /run/mysqld /var/lib/mysql
 
 if [ ! -d /var/lib/mysql/mysql ]; then
+    echo "ZIZIZIZZIZIIZIZIZIZIZ"
     find /var/lib/mysql -mindepth 1 -delete
     mariadb-install-db --user=mysql --datadir=/var/lib/mysql --auth-root-authentication-method=normal
 
     mysqld_safe --user=mysql --datadir=/var/lib/mysql --skip-networking &
     timeout 60 sh -c 'until mysqladmin ping --silent 2>/dev/null; do sleep 1; done'
-    mysql -u root << EOSQL
+    mysql -u root <<EOSQL
 ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PASSWORD}';
 CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;
 CREATE USER IF NOT EXISTS '${DB_USER}'@'%' IDENTIFIED BY '${DB_PASSWORD}';
