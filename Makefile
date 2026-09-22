@@ -5,12 +5,12 @@ DATA_PATH		= /home/$(USER)/data
 
 MODE ?= normal
 
-COMPOSE_DIR		= srcs
-COMPOSE_FILE	= $(COMPOSE_DIR)/docker-compose$(if $(filter bonus,$(MODE)),-bonus,).yml
-ENV_FILE		= $(COMPOSE_DIR)/.env
+COMPOSE_DIR			= srcs
+COMPOSE_FILE		= $(COMPOSE_DIR)/docker-compose$(if $(filter bonus,$(MODE)),-bonus,).yml
+COMPOSE_BONUS_FILE	= $(COMPOSE_DIR)/docker-compose-bonus.yml
+ENV_FILE			= $(COMPOSE_DIR)/.env
 
-COMPOSE			= docker compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE)
-
+COMPOSE = docker compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE) $(if $(filter bonus,$(MODE)),-f $(COMPOSE_BONUS_FILE),)
 
 SECRET_DIR = ./secrets
 SECRET_FILES = db_password db_root_password wp_admin_password wp_user_password
