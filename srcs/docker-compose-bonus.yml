@@ -13,6 +13,17 @@ services:
     depends_on:
       - redis
 
+  adminer:
+    container_name: adminer
+    build: ./requirements/bonus/adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    networks:
+      - inception
+    depends_on:
+      - mariadb
+
   ftp:
     container_name: ftp
     build: ./requirements/bonus/ftp
