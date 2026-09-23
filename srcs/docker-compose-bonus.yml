@@ -6,11 +6,26 @@ services:
     restart: always
     networks:
       - inception
+
   wordpress:
     environment:
       ENABLE_REDIS: "true"
     depends_on:
       - redis
+
+  ftp:
+    container_name: ftp
+    build: ./requirements/bonus/ftp
+    ports:
+      - "21:21"
+      - "21100-21110:21100-21110"
+    environment:
+      FTP_USER: ${FTP_USER}
+      FTP_HOST: ${FTP_HOST}
+      FTP_PASSWORD: /run/secrets/ftp_password
+    volumes:
+      - wordpress_volume:/home/${FTP_USER}
+
   static:
     build: ./requirements/bonus/static
     container_name: static
@@ -31,3 +46,7 @@ volumes:
       type: none
       o: bind
       device: /home/${USER:-vdurand}/data/static
+
+secrets:
+  db_password:
+    file: ${SECRET_DIR:-../secrets}/ftp_password.txt
