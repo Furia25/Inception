@@ -20,7 +20,9 @@ FTP_HOME="/home/${FTP_USER}"
 sed -i "s/__FTP_HOST__/${FTP_HOST}/" /etc/vsftpd.conf
 
 if ! id "$FTP_USER" &>/dev/null; then
-    useradd -M -d "$FTP_HOME" -s /usr/sbin/nologin "$FTP_USER"
+    useradd -M -d "$FTP_HOME" -s /usr/sbin/nologin -G www-data "$FTP_USER"
+else
+    usermod -aG www-data "$FTP_USER"
 fi
 
 echo "${FTP_USER}:${FTP_PASSWORD}" | chpasswd
