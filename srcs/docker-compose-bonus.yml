@@ -22,9 +22,11 @@ services:
     environment:
       FTP_USER: ${FTP_USER}
       FTP_HOST: ${FTP_HOST}
-      FTP_PASSWORD: /run/secrets/ftp_password
+      FTP_PASSWORD_FILE: /run/secrets/ftp_password
     volumes:
-      - wordpress_volume:/home/${FTP_USER}
+      - wordpress-volume:/home/${FTP_USER}
+    secrets:
+    - ftp_password
 
   static:
     build: ./requirements/bonus/static
@@ -48,5 +50,5 @@ volumes:
       device: /home/${USER:-vdurand}/data/static
 
 secrets:
-  db_password:
+  ftp_password:
     file: ${SECRET_DIR:-../secrets}/ftp_password.txt
