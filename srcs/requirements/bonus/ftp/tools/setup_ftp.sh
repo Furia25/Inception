@@ -29,7 +29,8 @@ mkdir -p "$FTP_HOME"
 chown root:root "$FTP_HOME"
 chmod 755 "$FTP_HOME"
 
-chown -R "$FTP_USER":www-data "$FTP_HOME"
-chmod -R g+w "$FTP_HOME"
+mkdir -p "$FTP_HOME/wordpress"
+chown -R "$FTP_USER":www-data "$FTP_HOME/wordpress"
+chmod -R g+w "$FTP_HOME/wordpress"
 
 exec /usr/sbin/vsftpd /etc/vsftpd.conf
