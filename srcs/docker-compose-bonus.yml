@@ -48,7 +48,7 @@ volumes:
       device: /home/${USER:-vdurand}/data/static
   wordpress_volume:
     external: true
-    name: wordpress_data
+    name: wordpress_volume
 
 secrets:
   db_password:
