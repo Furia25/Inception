@@ -17,4 +17,4 @@ RUN ln -s /usr/sbin/php-fpm8.2 /usr/local/bin/php-fpm
 
 EXPOSE 8080
 
-ENTRYPOINT ["/usr/local/bin/setup_wp.sh"]
+ENTRYPOINT ["/usr/local/bin/setup_adminer.sh"]
