@@ -26,6 +26,9 @@ fi
 echo "${FTP_USER}:${FTP_PASSWORD}" | chpasswd
 
 mkdir -p "$FTP_HOME"
+chown root:root "$FTP_HOME"
+chmod 755 "$FTP_HOME"
+
 chown -R "$FTP_USER":www-data "$FTP_HOME"
 chmod -R g+w "$FTP_HOME"
 
