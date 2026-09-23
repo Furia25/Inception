@@ -25,6 +25,8 @@ services:
       FTP_PASSWORD_FILE: /run/secrets/ftp_password
     volumes:
       - wordpress-volume:/home/${FTP_USER}
+    networks:
+      - inception
     secrets:
     - ftp_password
 

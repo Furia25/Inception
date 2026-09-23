@@ -26,7 +26,7 @@ fi
 echo "${FTP_USER}:${FTP_PASSWORD}" | chpasswd
 
 mkdir -p "$FTP_HOME"
-chown -R "$FTP_USER":"$FTP_USER" "$FTP_HOME"
-chmod 755 "$FTP_HOME"
+chown -R "$FTP_USER":www-data "$FTP_HOME"
+chmod -R g+w "$FTP_HOME"
 
 exec /usr/sbin/vsftpd /etc/vsftpd.conf
