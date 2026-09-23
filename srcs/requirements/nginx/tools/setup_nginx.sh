@@ -16,6 +16,12 @@ if [ ! -f "$CERT_FILE" ] || [ ! -f "$KEY_FILE" ]; then
         -subj "/C=FR/ST=IDF/L=Lyon/O=42/CN=${DOMAIN_NAME:-vdurand.42.fr}"
 fi
 
+if [ "${ENABLE_ADMINER}" = "true" ]; then
+    cp /nginx.bonus.conf /etc/nginx/nginx.conf
+else
+    cp /nginx.base.conf /etc/nginx/nginx.conf
+fi
+
 sed -i "s/DOMAIN_NAME/${DOMAIN_NAME:-vdurand.42.fr}/g" /etc/nginx/nginx.conf
 
 exec nginx -g "daemon off;"

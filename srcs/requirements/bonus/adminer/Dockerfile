@@ -1,7 +1,7 @@
 FROM debian:bookworm
 
 RUN apt-get update -yqq && \
-    apt-get install -yqq php php-mysqli wget && \
+    apt-get install -yqq php-fpm php-mysqli wget && \
     rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /var/www/html && \
@@ -9,6 +9,12 @@ RUN mkdir -p /var/www/html && \
 
 WORKDIR /var/www/html
 
+COPY tools/setup_adminer.sh /usr/local/bin/setup_adminer.sh
+RUN chmod +x /usr/local/bin/setup_adminer.sh
+
+RUN sed -i 's|^listen = .*|listen = 8080|' /etc/php/8.2/fpm/pool.d/www.conf
+RUN ln -s /usr/sbin/php-fpm8.2 /usr/local/bin/php-fpm
+
 EXPOSE 8080
 
-CMD ["php", "-S", "0.0.0.0:8080", "-t", "/var/www/html"]
+ENTRYPOINT ["/usr/local/bin/setup_wp.sh"]

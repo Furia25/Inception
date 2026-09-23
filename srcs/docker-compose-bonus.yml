@@ -17,13 +17,19 @@ services:
     container_name: adminer
     build: ./requirements/bonus/adminer
     restart: always
-    ports:
-      - "8080:8080"
     networks:
       - inception
     depends_on:
       - mariadb
+      - wordpress
 
+  nginx:
+    environment:
+      ENABLE_ADMINER: "true"
+    depends_on:
+      - wordpress
+      - adminer
+    
   ftp:
     container_name: ftp
     build: ./requirements/bonus/ftp
