@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 file_env() {
     local var="$1"
@@ -8,10 +9,11 @@ file_env() {
     fi
 }
 
-set -e
-
-file_env FTP_USER
 file_env FTP_PASSWORD
+
+: "${FTP_USER:?FTP_USER is required}"
+: "${FTP_PASSWORD:?FTP_PASSWORD is required}"
+: "${FTP_HOST:?FTP_HOST is required}"
 
 FTP_HOME="/home/${FTP_USER}"
 
@@ -24,8 +26,7 @@ fi
 echo "${FTP_USER}:${FTP_PASSWORD}" | chpasswd
 
 mkdir -p "$FTP_HOME"
-chown "$FTP_USER":"$FTP_USER" "$FTP_HOME"
-
+chown -R "$FTP_USER":"$FTP_USER" "$FTP_HOME"
 chmod 755 "$FTP_HOME"
 
 exec /usr/sbin/vsftpd /etc/vsftpd.conf
