@@ -46,9 +46,6 @@ volumes:
       type: none
       o: bind
       device: /home/${USER:-vdurand}/data/static
-  wordpress_data:
-    external: true
-    name: wordpress_data
 
 secrets:
   db_password:
