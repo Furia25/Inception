@@ -16,12 +16,15 @@ if [ ! -f "$CERT_FILE" ] || [ ! -f "$KEY_FILE" ]; then
         -subj "/C=FR/ST=IDF/L=Lyon/O=42/CN=${DOMAIN_NAME:-vdurand.42.fr}"
 fi
 
+# Retire le site par défaut de Debian qui pourrait entrer en conflit
+rm -f /etc/nginx/sites-enabled/default
+
 if [ "${ENABLE_ADMINER}" = "true" ]; then
-    cp /nginx.bonus.conf /etc/nginx/nginx.conf
+    cp /nginx.bonus.conf /etc/nginx/conf.d/inception.conf
 else
-    cp /nginx.base.conf /etc/nginx/nginx.conf
+    cp /nginx.base.conf /etc/nginx/conf.d/inception.conf
 fi
 
-sed -i "s/DOMAIN_NAME/${DOMAIN_NAME:-vdurand.42.fr}/g" /etc/nginx/nginx.conf
+sed -i "s/DOMAIN_NAME/${DOMAIN_NAME:-vdurand.42.fr}/g" /etc/nginx/conf.d/inception.conf
 
 exec nginx -g "daemon off;"
