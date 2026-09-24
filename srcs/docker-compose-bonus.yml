@@ -23,13 +23,6 @@ services:
       - mariadb
       - wordpress
 
-  nginx:
-    environment:
-      ENABLE_ADMINER: "true"
-    depends_on:
-      - wordpress
-      - adminer
-    
   ftp:
     container_name: ftp
     build: ./requirements/bonus/ftp
@@ -47,6 +40,14 @@ services:
     secrets:
     - ftp_password
 
+  portainer:
+    build: ./requirements/bonus/portainer
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - portainer-volume:/data
+    networks:
+      - inception
+
   static:
     build: ./requirements/bonus/static
     container_name: static
@@ -60,6 +61,14 @@ services:
     environment:
       DOMAIN_NAME: ${DOMAIN_NAME}
 
+    nginx:
+    environment:
+      ENABLE_ADMINER: "true"
+    depends_on:
+      - wordpress
+      - adminer
+      - portainer
+
 volumes:
   static-volume:
     driver: local
@@ -67,6 +76,12 @@ volumes:
       type: none
       o: bind
       device: /home/${USER:-vdurand}/data/static
+  portainer-volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/${USER:-vdurand}/data/portainer
 
 secrets:
   ftp_password:
