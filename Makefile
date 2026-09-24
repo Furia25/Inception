@@ -45,6 +45,7 @@ data:
 		mkdir -p $(DATA_PATH)/ftp; \
 		mkdir -p $(DATA_PATH)/adminer; \
 		mkdir -p $(DATA_PATH)/static; \
+		mkdir -p $(DATA_PATH)/portainer; \
 	fi
 
 clean-data:

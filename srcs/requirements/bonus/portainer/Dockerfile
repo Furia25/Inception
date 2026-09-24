@@ -13,6 +13,6 @@ RUN curl -L https://github.com/portainer/portainer/releases/download/2.45.1/port
     && mv /tmp/portainer/public /usr/local/share/portainer-public \
     && rm -rf /tmp/portainer*
 
-EXPOSE 9443
+EXPOSE 8000
 
-CMD ["portainer", "--assets", "/usr/local/share/portainer-public", "--http-listen-addr", ":9443"]
+CMD ["portainer", "--bind", ":8000", "--tunnel-port", "8001", "--bind-https", ""]

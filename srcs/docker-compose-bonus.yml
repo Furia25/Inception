@@ -41,6 +41,7 @@ services:
     - ftp_password
 
   portainer:
+    container_name: portainer
     build: ./requirements/bonus/portainer
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -61,7 +62,7 @@ services:
     environment:
       DOMAIN_NAME: ${DOMAIN_NAME}
 
-    nginx:
+  nginx:
     environment:
       ENABLE_ADMINER: "true"
     depends_on:
