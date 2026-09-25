@@ -1,7 +1,7 @@
 FROM debian:bookworm
 
 RUN apt-get update -yqq && \
-    apt-get install -yqq vsftpd && \
+    apt-get install -yqq vsftpd tini && \
     rm -rf /var/lib/apt/lists/*
 
 RUN echo "/usr/sbin/nologin" >> /etc/shells

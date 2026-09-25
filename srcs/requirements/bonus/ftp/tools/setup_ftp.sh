@@ -35,4 +35,4 @@ mkdir -p "$FTP_HOME/wordpress"
 chown -R "$FTP_USER":www-data "$FTP_HOME/wordpress"
 chmod -R g+w "$FTP_HOME/wordpress"
 
-exec /usr/sbin/vsftpd /etc/vsftpd.conf
+/usr/bin/tini /usr/sbin/vsftpd /etc/vsftpd.conf
