@@ -46,6 +46,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - portainer-volume:/data
+    secrets:
+      - portainer_password
     networks:
       - inception
 
@@ -89,3 +91,5 @@ volumes:
 secrets:
   ftp_password:
     file: ${SECRET_DIR:-../secrets}/ftp_password.txt
+  portainer_password:
+    file: ${SECRET_DIR:-../secrets}/portainer_password.txt

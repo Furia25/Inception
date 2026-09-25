@@ -15,4 +15,4 @@ RUN curl -L https://github.com/portainer/portainer/releases/download/2.45.1/port
 
 EXPOSE 8000
 
-CMD ["portainer", "--bind", ":8000", "--tunnel-port", "8001", "--bind-https", ""]
+CMD ["portainer", "--bind", ":8000", "--tunnel-port", "8001", "--bind-https", "", "--admin-password-file", "/run/secrets/portainer_password"]
