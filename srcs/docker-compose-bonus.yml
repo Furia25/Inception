@@ -67,8 +67,6 @@ services:
   nginx:
     environment:
       ENABLE_ADMINER: "true"
-    ports:
-      - "8443:8443"
     depends_on:
       - wordpress
       - adminer
